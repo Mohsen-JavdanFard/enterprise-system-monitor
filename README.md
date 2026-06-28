@@ -41,3 +41,14 @@ graph LR
 ```bash
 git clone https://github.com/Mohsen-JavdanFard/enterprise-system-monitor.git
 cd enterprise-system-monitor
+
+---
+
+### 2. Run via Docker (Recommended)
+To run the entirely isolated containerized environment without installing Python:
+```bash
+docker build -t enterprise-monitor .
+docker run -p 8000:8000 enterprise-monitor
+
+---
+
