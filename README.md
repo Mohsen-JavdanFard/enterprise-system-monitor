@@ -26,3 +26,18 @@ graph LR
     
     style C fill:#009688,stroke:#fff,stroke-width:2px,color:#fff
     style E fill:#f39c12,stroke:#fff,stroke-width:2px,color:#fff
+````
+## 🏗️ Architecture & Tech Stack
+* **Backend:** Python, FastAPI, `psutil` (for OS-level metric extraction), `uvicorn` (ASGI server), `websockets`.
+* **Frontend:** HTML5, CSS3 (Dark Theme/Cyber UI), Vanilla JS.
+* **DevOps:** Docker.
+* **Data Format:** Standardized JSON.
+
+---
+
+## 🚀 Installation & Usage
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Mohsen-JavdanFard/enterprise-system-monitor.git
+cd enterprise-system-monitor
