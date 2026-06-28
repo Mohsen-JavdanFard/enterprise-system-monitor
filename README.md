@@ -39,16 +39,35 @@ graph LR
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Mohsen-JavdanFard/enterprise-system-monitor.git
+git clone [https://github.com/Mohsen-JavdanFard/enterprise-system-monitor.git](https://github.com/Mohsen-JavdanFard/enterprise-system-monitor.git)
 cd enterprise-system-monitor
-
----
+```
 
 ### 2. Run via Docker (Recommended)
 To run the entirely isolated containerized environment without installing Python:
 ```bash
 docker build -t enterprise-monitor .
 docker run -p 8000:8000 enterprise-monitor
+```
+
+### 3. Manual Installation
+Ensure you have Python 3.8+ installed, then run:
+```bash
+pip install fastapi uvicorn psutil websockets
+python main.py
+```
+
+### 4. Launch the Dashboard
+Simply double-click the `dashboard.html` file to open it in your preferred web browser. The dashboard will automatically establish a secure WebSocket connection to the backend and begin rendering the live metrics.
 
 ---
 
+## 📸 Dashboard Preview
+![Dashboard Preview](./preview.png)
+
+---
+
+## 🤝 Let's Connect
+This project was built to demonstrate scalable automation and system architecture. If you're interested in infrastructure, backend development, or IT automation, feel free to reach out!
+
+* **GitHub:** https://github.com/Mohsen-JavdanFard
