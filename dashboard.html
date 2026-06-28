@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise System Monitor</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { 
+            color: #58a6ff; 
+            font-size: 2.5em;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            width: 100%;
+            max-width: 1100px;
+            margin-top: 30px;
+        }
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            transition: transform 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #58a6ff;
+        }
+        .card h2 { 
+            margin-top: 0; 
+            color: #8b949e; 
+            font-size: 1.4em; 
+            text-transform: uppercase;
+        }
+        .value { 
+            font-size: 3.5em; 
+            font-weight: bold; 
+            margin: 15px 0; 
+            color: #7ee787; 
+            text-shadow: 0 0 10px rgba(126, 231, 135, 0.3);
+        }
+        .sub-text { 
+            font-size: 1.1em; 
+            color: #8b949e; 
+        }
+        .status { 
+            margin-top: 10px; 
+            color: #ff7b72; 
+            font-size: 1.2em;
+            font-weight: bold; 
+        }
+        .network-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>ENTERPRISE SYSTEM MONITOR</h1>
+    <div id="connection-status" class="status">🟡 Connecting to Server...</div>
+
+    <div class="dashboard">
+        <div class="card">
+            <h2>CPU Usage</h2>
+            <div id="cpu-value" class="value">--%</div>
+            <div id="cpu-cores" class="sub-text">Logical Cores: --</div>
+        </div>
+
+        <div class="card">
+            <h2>Memory (RAM)</h2>
+            <div id="ram-value" class="value">--%</div>
+            <div id="ram-total" class="sub-text">Total Installed: -- GB</div>
+        </div>
+
+        <div class="card">
+            <h2>Network Traffic</h2>
+            <div id="net-sent" class="network-value" style="color: #ffa657;">Upload: -- MB</div>
+            <div id="net-recv" class="network-value" style="color: #79c0ff;">Download: -- MB</div>
+        </div>
+    </div>
+
+    <script>
+        // برقراری ارتباط زنده با سرور پایتون از طریق وب‌سوکت
+        const ws = new WebSocket("ws://127.0.0.1:8000/ws/stream");
+        const statusDiv = document.getElementById("connection-status");
+
+        ws.onopen = function() {
+            statusDiv.textContent = "🟢 LIVE - CONNECTED SECURELY";
+            statusDiv.style.color = "#7ee787";
+        };
+
+        ws.onmessage = function(event) {
+            // تبدیل اطلاعات دریافتی به آبجکت جاوااسکریپت
+            const data = JSON.parse(event.data);
+
+            // بروزرسانی زنده کارت پردازنده
+            document.getElementById("cpu-value").textContent = data.CPU.Usage_Percent + "%";
+            document.getElementById("cpu-cores").textContent = "Logical Cores: " + data.CPU.Cores;
+
+            // بروزرسانی زنده کارت حافظه
+            document.getElementById("ram-value").textContent = data.RAM.Usage_Percent + "%";
+            document.getElementById("ram-total").textContent = "Total Installed: " + data.RAM.Total_GB + " GB";
+
+            // بروزرسانی زنده کارت شبکه
+            document.getElementById("net-sent").textContent = "Upload: " + data.Network.Sent_MB + " MB";
+            document.getElementById("net-recv").textContent = "Download: " + data.Network.Received_MB + " MB";
+        };
+
+        ws.onclose = function() {
+            statusDiv.textContent = "🔴 DISCONNECTED - SERVER OFFLINE";
+            statusDiv.style.color = "#ff7b72";
+        };
+    </script>
+</body>
+</html>
