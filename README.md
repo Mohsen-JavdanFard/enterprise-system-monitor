@@ -26,7 +26,7 @@ graph LR
     
     style C fill:#009688,stroke:#fff,stroke-width:2px,color:#fff
     style E fill:#f39c12,stroke:#fff,stroke-width:2px,color:#fff
-
+```
 ---
 
 🏗️ Architecture & Tech Stack
